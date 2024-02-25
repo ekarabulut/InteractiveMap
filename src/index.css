@@ -5,11 +5,10 @@
 }
 
 html {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 body {
-  min-height: 100vh;
   font-family: 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -17,16 +16,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.App {
+.manage {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh; 
-  width: 100%; 
-  max-width: 500px;
   border: 2px solid #b95f29;
-  margin: 5px;
 }
 
 header {
@@ -68,9 +64,39 @@ ul li::before {
   content: "\200B";
 }
 
+.mapPart {
+  width: 100%; 
+  height: 100vh;
+  min-height: 500px;
+  position: relative;
+}
+
+.mt {
+  margin-top: 2rem;
+}
+
+.textCenter{
+  text-align: center;
+}
+
+.addNewLocation {
+  position: fixed;
+  top: 10px;
+  z-index: 401
+}
+
+.mapContainer {
+  width: 100%;
+  height: 100%
+}
+
+.dflex {
+  display: flex;
+}
+
 .item {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   padding: 0.5rem 0 0.5rem 0.5rem;
   margin: 0.25rem 0;
@@ -80,24 +106,9 @@ ul li::before {
 .item:first-child {
   margin: 0;
 }
-
-.item input[type="checkbox"] {
-  text-align: center;
-  width: 2.5rem;
-  width: 48px;
-  min-width: 48px;
-  height: 2.5rem;
-  height: 48px;
-  min-height: 48px;
-  cursor: pointer;
-  margin-right: 0.5rem;
+.item button {
+  width: 100%;
 }
-
-.item > label {
-  font-size: 0.75rem;
-  flex-grow: 1;
-}
-
 .item svg {
   width: 48px;
   min-width: 48px;
@@ -105,6 +116,7 @@ ul li::before {
   font-size: 1rem;
   color: steelblue;
   cursor: pointer;
+  
 }
 
 .item svg:focus, 
@@ -113,17 +125,30 @@ ul li::before {
   outline: none;
 }
 
+.addLocation {
+  width: fit-content;
+  align-self: stretch
+}
+
 .addForm {
+  background-color: whitesmoke;
   width: 400px;
   bottom: 0px;
-  right: 50px;
-  display: flex;
-  justify-content: flex-start;
-  margin: 0.5rem 0 0;
-  padding: 0 0.5rem 0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0.5rem;
+  padding: 0.5rem 0.25rem;
   border-bottom: 1px solid #eee;
   position: absolute;
   z-index: 402;
+  box-shadow: 0px 0px 5px black;
+}
+
+.addForm > form {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .addForm label {
@@ -181,4 +206,14 @@ button:hover {
   padding: 0.25rem;
   border-radius: 0.25rem;
   outline: none;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.col-md-4, .col-md-8 {
+  padding-left: 0;
+  padding-right: 0;
 }

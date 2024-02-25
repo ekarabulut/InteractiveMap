@@ -1,7 +1,7 @@
 const Footer = ({ length }) => {
     return (
         <footer>
-            <p>{length} {length === 1 ? "location" : "locations"}</p>
+            {length} {length === 1 ? "location" : "locations"}
         </footer>
     )
 }
