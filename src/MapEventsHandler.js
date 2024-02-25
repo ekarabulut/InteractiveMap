@@ -26,7 +26,7 @@ const MapEventsHandler = ({ setLat, setLng }) => {
   });
   return (
     <div>
-      <button onClick={goToLocation} style={{ position: 'fixed', top: '10px', zIndex: 400 }}>Click me</button>
+     {/*  <button onClick={goToLocation} style={{ position: 'fixed', top: '10px', zIndex: 400 }}>Click me</button> */}
     </div>
   );
 };

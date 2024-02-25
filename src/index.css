@@ -114,12 +114,16 @@ ul li::before {
 }
 
 .addForm {
-  width: 100%;
+  width: 400px;
+  bottom: 0px;
+  right: 50px;
   display: flex;
   justify-content: flex-start;
   margin: 0.5rem 0 0;
   padding: 0 0.5rem 0.25rem;
   border-bottom: 1px solid #eee;
+  position: absolute;
+  z-index: 402;
 }
 
 .addForm label {

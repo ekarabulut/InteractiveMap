@@ -34,7 +34,7 @@ function App() {
 
   const addItem = (title) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
-    const myNewItem = { id, lat:5, lng:5, title };
+    const myNewItem = { id, lat: lat, lng: lng, title };
     const listItems = [...items, myNewItem];
     setAndSaveItems(listItems);
   }  
@@ -53,12 +53,16 @@ function App() {
 
   return (
     <div style={{ display: 'flex'}}>
-      <div className="App">      
-        <AddItem
-          newItem={newItem}
-          setNewItem={setNewItem}
-          handleSubmit={handleSubmit}
-        />
+      <div className="App">          
+      <AddItem style={{ position: 'fixed', top: '10px', zIndex: 401 }}
+            lat={lat}
+            lng={lng}
+            setLat={setLat}
+            setLng={setLng}
+            newItem={newItem}
+            setNewItem={setNewItem}
+            handleSubmit={handleSubmit}
+          />  
         <Header title="My Locations" />
         <SearchItem
           search={search}
@@ -72,7 +76,7 @@ function App() {
       </div>
       <div style={{ width: "100%", height: "100vh"}}>
         <MapContainer center={[lat, lng]} zoom={13} style={{ width: "100%", height: '100%'}}>
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />         
           <MapEventsHandler setLat={setLat} setLng={setLng} />
         {/*  <SetLocationHandler setLat={setLat} setLng={setLng} /> */}
           <Marker position={[lat, lng]} icon={customIcon}>
