@@ -1,13 +1,14 @@
-import LineItem from './LineItem';
+import LineItem from './LineLocation';
 
-const ItemList = ({ items, handleDelete }) => {
+const ItemList = ({ locations, handleDelete, handleGoLocation }) => {
     return (
         <ul>
-            {items.map((item) => (
+            {locations.map((item) => (
                 <LineItem
                     key={item.id}
                     item={item}                    
                     handleDelete={handleDelete}
+                    handleGoLocation={handleGoLocation}
                 />
             ))}
         </ul>

@@ -5,7 +5,7 @@
 }
 
 html {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 body {
@@ -17,7 +17,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.App {
+.manage {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,6 +68,35 @@ ul li::before {
   content: "\200B";
 }
 
+.mapPart {
+  width: 100%; 
+  height: "100vh";
+  position: relative;
+}
+
+.mt {
+  margin-top: 2rem;
+}
+
+.textCenter{
+  text-align: center;
+}
+
+.addNewLocation {
+  position: fixed;
+  top: 10px;
+  z-index: 401
+}
+
+.mapContainer {
+  width: 100%;
+  height: 100%
+}
+
+.dflex {
+  display: flex;
+}
+
 .item {
   display: flex;
   justify-content: flex-start;
@@ -113,17 +142,30 @@ ul li::before {
   outline: none;
 }
 
+.addLocation {
+  width: fit-content;
+  align-self: stretch
+}
+
 .addForm {
+  background-color: whitesmoke;
   width: 400px;
   bottom: 0px;
-  right: 50px;
-  display: flex;
-  justify-content: flex-start;
-  margin: 0.5rem 0 0;
-  padding: 0 0.5rem 0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0.5rem;
+  padding: 0.5rem 0.25rem;
   border-bottom: 1px solid #eee;
   position: absolute;
   z-index: 402;
+  box-shadow: 0px 0px 5px black;
+}
+
+.addForm > form {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .addForm label {

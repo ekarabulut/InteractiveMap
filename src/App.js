@@ -1,88 +1,101 @@
 import Header from './Header';
 import SearchItem from './SearchItem';
-import AddItem from './AddItem';
+import AddLocation from './AddLocation';
 import Content from './Content';
 import Footer from './Footer';
 import MapEventsHandler from './MapEventsHandler';
 import { useState } from 'react';
 
 import "leaflet/dist/leaflet.css";
-import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { Icon } from "leaflet";
 
-// create custom icon
+// Create custom icon
 const customIcon = new Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
-  // iconUrl: require("./icons/placeholder.png"),
   iconSize: [38, 38] // size of the icon
 });
 
 function App() {
-  let storedList = JSON.parse(localStorage.getItem('shoppinglist'));
-  let initialValue = storedList ? storedList : []; 
-  const [items, setItems] = useState(initialValue);
-  const [newItem, setNewItem] = useState('')
-  const [search, setSearch] = useState('')
+  let storedList = JSON.parse(localStorage.getItem('locationsList'));
+  let initialValue = storedList ? storedList : [];
 
-  const [lat, setLat] = useState(48.86);
-  const [lng, setLng] = useState(2.3522);
+  // Initialize state variables
+  const [locations, setLocations] = useState(initialValue);
+  const [newTitle, setNewTitle] = useState('');
+  const [search, setSearch] = useState('');
+  const [flyToLocation, setFlyToLocation] = useState(true);
+  const [indexTriggerer, setIndexTriggerer] = useState(false);
+  const startUpLocation = { lat: 51.510559, lng: -0.128059 } // London center
+  const [lat, setLat] = useState(startUpLocation.lat);
+  const [lng, setLng] = useState(startUpLocation.lng);
   
-  const setAndSaveItems = (newItems) => {
-    setItems(newItems);
-    localStorage.setItem('shoppinglist', JSON.stringify(newItems));
+  // Function to update locations and save to local storage
+  const setAndSaveLocations = (newLocations) => {
+    setLocations(newLocations);
+    localStorage.setItem('locationsList', JSON.stringify(newLocations));
   }
 
-  const addItem = (title) => {
-    const id = items.length ? items[items.length - 1].id + 1 : 1;
+  // Function to add a new location to locations list
+  const addLocation = (title) => {
+    const id = locations.length ? locations[locations.length - 1].id + 1 : 1;
     const myNewItem = { id, lat: lat, lng: lng, title };
-    const listItems = [...items, myNewItem];
-    setAndSaveItems(listItems);
+    const listItems = [...locations, myNewItem];
+    setAndSaveLocations(listItems);
   }  
 
+  // Function to handle deletion of a location
   const handleDelete = (id) => {
-    const listItems = items.filter((item) => item.id !== id);
-    setAndSaveItems(listItems);
+    const listItems = locations.filter((item) => item.id !== id);
+    setAndSaveLocations(listItems);
   }
 
+  // Function to handle clicking on the add button (for adding a location)
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!newItem) return;
-    addItem(newItem);
-    setNewItem('');
+    if (!newTitle) return;
+    addLocation(newTitle);
+    setNewTitle('');
+    setFlyToLocation(true);
+  }
+
+  // Function to handle clicking on a location in the list
+  const handleGoLocation = (item) => {
+    setLat(item.lat);
+    setLng(item.lng);
+    setFlyToLocation(true);
+    setIndexTriggerer(!indexTriggerer);    
   }
 
   return (
-    <div style={{ display: 'flex'}}>
-      <div className="App">          
-      <AddItem style={{ position: 'fixed', top: '10px', zIndex: 401 }}
-            lat={lat}
-            lng={lng}
-            setLat={setLat}
-            setLng={setLng}
-            newItem={newItem}
-            setNewItem={setNewItem}
-            handleSubmit={handleSubmit}
-          />  
+    <div className='dflex'>
+      <div className="manage">          
         <Header title="My Locations" />
         <SearchItem
           search={search}
           setSearch={setSearch}
         />
         <Content
-          items={items.filter(item => ((item.title).toLowerCase()).includes(search.toLowerCase()))}      
+          locations={locations.filter(item => ((item.title).toLowerCase()).includes(search.toLowerCase()))}      
           handleDelete={handleDelete}
+          handleGoLocation={handleGoLocation}
         />
-        <Footer length={items.length} />
+        <Footer length={locations.length} />
       </div>
-      <div style={{ width: "100%", height: "100vh"}}>
-        <MapContainer center={[lat, lng]} zoom={13} style={{ width: "100%", height: '100%'}}>
+      <div className='mapPart'>
+      <AddLocation
+          className="addNewLocation"
+          lat={lat}
+          lng={lng}       
+          newTitle={newTitle}
+          setNewTitle={setNewTitle}
+          handleSubmit={handleSubmit}
+          flyToLocation={flyToLocation}
+        />        
+        <MapContainer center={[lat, lng]} zoom={13} className='mapContainer'>
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />         
-          <MapEventsHandler setLat={setLat} setLng={setLng} />
-        {/*  <SetLocationHandler setLat={setLat} setLng={setLng} /> */}
-          <Marker position={[lat, lng]} icon={customIcon}>
-            <Popup>
-              A popup message on the marker.
-            </Popup>
+          <MapEventsHandler lat={lat} lng={lng} setLat={setLat} setLng={setLng} flyToLocation={flyToLocation} setFlyToLocation={setFlyToLocation} indexTriggerer={indexTriggerer} />
+          <Marker position={[lat, lng]} icon={customIcon}>            
           </Marker>      
         </MapContainer>
       </div>

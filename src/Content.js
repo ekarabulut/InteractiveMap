@@ -1,15 +1,16 @@
-import ItemList from './ItemList';
+import ItemList from './LocationList';
 
-const Content = ({ items, handleDelete }) => {
+const Content = ({ locations, handleDelete, handleGoLocation }) => {
     return (
         <main>
-            {items.length ? (
+            {locations.length ? (
                 <ItemList
-                    items={items}                
+                    locations={locations}                
                     handleDelete={handleDelete}
+                    handleGoLocation={handleGoLocation}
                 />
             ) : (
-                <p style={{ marginTop: '2rem' }}>Your list is empty.</p>
+                <p className='mt'>Your list is empty.</p>
             )}
         </main>
     )
